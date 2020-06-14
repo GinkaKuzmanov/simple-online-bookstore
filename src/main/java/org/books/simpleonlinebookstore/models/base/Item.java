@@ -27,13 +27,13 @@ public class Item extends BaseEntity implements Priceable {
     @Column(columnDefinition = "money", scale = 2)
     protected Double price;
 
-    @ManyToMany(fetch = FetchType.EAGER,targetEntity = User.class)
+    @ManyToMany(fetch = FetchType.EAGER,targetEntity = User.class,cascade = CascadeType.ALL)
     @JoinTable(name = "items_users",
             joinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id")
     )
     @ToString.Exclude
-    protected Set<User> users = new HashSet<>();
+    protected Set<User> buyers = new HashSet<>();
 
     @Override
     public Double calculatePrice() {

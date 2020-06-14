@@ -71,12 +71,12 @@ public class User extends BaseEntity {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> authorities = new HashSet<>();
 
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "buyers")
     @ToString.Exclude
     @JsonIgnore
     private Set<Book> books = new HashSet<>();
 
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "buyers")
     @ToString.Exclude
     @JsonIgnore
     private Set<Music> music = new HashSet<>();
