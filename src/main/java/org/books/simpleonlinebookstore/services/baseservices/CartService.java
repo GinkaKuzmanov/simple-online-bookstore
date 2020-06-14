@@ -1,21 +1,14 @@
 package org.books.simpleonlinebookstore.services.baseservices;
 
-import org.books.simpleonlinebookstore.models.base.Item;
+import org.books.simpleonlinebookstore.models.User;
 import org.books.simpleonlinebookstore.services.commercial.Priceable;
-
-import java.util.Collection;
 
 public interface CartService extends Priceable {
 
-    Collection<Item> getItems();
+    //catalog books
+    void buyBookForUser(User user);
 
-    Item getItemById(Long id);
+    //catalog music
+    void buyMusicForUser(User user);
 
-    Item createItem(Item item);
-
-    Item updateItem(Item item);
-
-    Item deleteItem(Long id);
-
-    long getPostsCount();
 }

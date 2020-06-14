@@ -1,11 +1,8 @@
 package org.books.simpleonlinebookstore.models.items;
 
 import lombok.*;
-import org.books.simpleonlinebookstore.models.base.BaseEntity;
 import org.books.simpleonlinebookstore.models.base.Item;
-import org.books.simpleonlinebookstore.services.commercial.Priceable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;

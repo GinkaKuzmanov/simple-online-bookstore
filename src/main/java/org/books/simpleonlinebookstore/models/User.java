@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.books.simpleonlinebookstore.models.base.BaseEntity;
+import org.books.simpleonlinebookstore.models.items.Book;
+import org.books.simpleonlinebookstore.models.items.Music;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -68,5 +70,16 @@ public class User extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> authorities = new HashSet<>();
+
+    @ManyToMany(mappedBy = "users")
+    @ToString.Exclude
+    @JsonIgnore
+    private Set<Book> books = new HashSet<>();
+
+    @ManyToMany(mappedBy = "users")
+    @ToString.Exclude
+    @JsonIgnore
+    private Set<Music> music = new HashSet<>();
+
 
 }

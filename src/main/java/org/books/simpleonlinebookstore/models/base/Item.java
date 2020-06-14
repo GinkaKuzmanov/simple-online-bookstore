@@ -1,18 +1,14 @@
 package org.books.simpleonlinebookstore.models.base;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 import org.books.simpleonlinebookstore.models.User;
 import org.books.simpleonlinebookstore.services.commercial.Priceable;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @MappedSuperclass
@@ -22,17 +18,22 @@ public class Item extends BaseEntity implements Priceable {
 
     @NonNull
     @NotEmpty
-    private String title;
+    protected String title;
 
-    private final Date datePublished = new Date();
+    protected final Date datePublished = new Date();
 
     @NotEmpty
     @NonNull
     @Column(columnDefinition = "money", scale = 2)
-    private Double price;
+    protected Double price;
 
-    @ManyToOne(targetEntity = User.class,cascade = {CascadeType.PERSIST,CascadeType.REFRESH})
-    private User user;
+    @ManyToMany(fetch = FetchType.EAGER,targetEntity = User.class)
+    @JoinTable(name = "items_users",
+            joinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id")
+    )
+    @ToString.Exclude
+    protected Set<User> users = new HashSet<>();
 
     @Override
     public Double calculatePrice() {

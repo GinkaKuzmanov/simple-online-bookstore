@@ -8,6 +8,7 @@ import java.util.Collection;
 
 @Service
 public class UserServiceImpl implements UserService {
+
     @Override
     public Collection<User> getUsers() {
         return null;
