@@ -4,46 +4,36 @@ import lombok.*;
 import org.books.simpleonlinebookstore.models.base.BaseEntity;
 import org.books.simpleonlinebookstore.services.commercial.Priceable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
+
 @Entity
-@Table(name = "books")
+@Table(name = "music")
 @Builder
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Book extends BaseEntity implements Priceable {
+public class Music extends BaseEntity implements Priceable {
 
     @NonNull
     @NotEmpty
     private String title;
-
     @NonNull
     @NotEmpty
-    private String authors;
-
+    private String artist;
     @NonNull
     @NotEmpty
-    private String publisher;
+    private String producer;
 
-    @Column(scale = 2)
+    private Date datePublished = new Date();
+    @NonNull
     @NotEmpty
     private Double price;
-
-    @NonNull
-    @NotEmpty
-    private String isbn;
-
-    @NonNull
-    private String genre;
-
-    private Date publishedDate = new Date();
 
     @Override
     public Double calculatePrice() {

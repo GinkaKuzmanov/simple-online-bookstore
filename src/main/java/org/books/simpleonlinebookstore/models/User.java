@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -35,14 +36,14 @@ public class User extends BaseEntity {
     @NonNull
     @Email
     @Column(unique = true, nullable = false)
-    @NotNull
+    @NotEmpty
     @EqualsAndHashCode.Include
     private String email;
 
     @NonNull
     @Length(min = 4, max = 80)
     @Column(nullable = false)
-    @NotNull
+    @NotEmpty
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
