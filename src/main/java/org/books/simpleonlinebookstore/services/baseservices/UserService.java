@@ -1,6 +1,7 @@
 package org.books.simpleonlinebookstore.services.baseservices;
 
 import org.books.simpleonlinebookstore.models.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
@@ -19,5 +20,7 @@ public interface UserService {
     User deleteUser(Long id);
 
     long getUsersCount();
+
+    User getUserByUsername(String username);
 }
 

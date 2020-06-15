@@ -1,6 +1,7 @@
 package org.books.simpleonlinebookstore.services;
 
 import org.books.simpleonlinebookstore.dao.UserRepository;
+import org.books.simpleonlinebookstore.exceptions.EntityNotFoundException;
 import org.books.simpleonlinebookstore.models.User;
 import org.books.simpleonlinebookstore.services.baseservices.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public long getUsersCount() {
         return 0;
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        return userRepository.findByEmail(username).orElseThrow(() ->
+                new EntityNotFoundException(String.format("User '%s' not found.", username)));
     }
 }

@@ -8,11 +8,13 @@ import org.books.simpleonlinebookstore.models.base.BaseEntity;
 import org.books.simpleonlinebookstore.models.items.Book;
 import org.books.simpleonlinebookstore.models.items.Music;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,7 +26,7 @@ import java.util.Set;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class User extends BaseEntity {
+public class User extends BaseEntity implements UserDetails {
 
     @NonNull
     @Length(min = 2, max = 50)
@@ -69,7 +71,7 @@ public class User extends BaseEntity {
     private boolean active = true;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> authorities = new HashSet<>();
+    private Collection<Role> authorities = new HashSet<>();
 
     @ManyToMany(mappedBy = "buyers")
     @ToString.Exclude
@@ -82,4 +84,28 @@ public class User extends BaseEntity {
     private Set<Music> music = new HashSet<>();
 
 
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return this.active;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return this.active;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return this.active;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.active;
+    }
 }
