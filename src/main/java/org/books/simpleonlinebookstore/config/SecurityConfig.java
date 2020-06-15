@@ -28,8 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth)
-            throws Exception {
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("rest").password(
                 this.passwordEncoder.encode("rocks")).roles("USER");
@@ -44,10 +43,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserDetailsService userDetailsService(UserService users) {
-        return username -> {
+        return email -> {
             try {
-                UserDetails found = users.getUserByUsername(username);
-                log.debug(">>> User authenticated for username: {} is {}", username, found);
+                UserDetails found = users.getUserByUsername(email);
+                log.debug(">>> User authenticated for username: {} is {}", email, found);
                 return found;
             } catch (EntityNotFoundException ex) {
                 throw new UsernameNotFoundException(ex.getMessage(), ex);

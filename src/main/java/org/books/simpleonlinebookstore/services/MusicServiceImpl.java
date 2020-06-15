@@ -2,11 +2,14 @@ package org.books.simpleonlinebookstore.services;
 
 import org.books.simpleonlinebookstore.dao.MusicRepository;
 import org.books.simpleonlinebookstore.exceptions.EntityNotFoundException;
+import org.books.simpleonlinebookstore.exceptions.InvalidEntityException;
 import org.books.simpleonlinebookstore.models.items.Music;
 import org.books.simpleonlinebookstore.services.baseservices.MusicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Service
@@ -34,22 +37,30 @@ public class MusicServiceImpl implements MusicService {
     }
 
     @Override
-    public Music createMusic(Music music) {
-        return null;
+    public Music createMusic(@Valid Music music) {
+        this.musicRepository.findByArtistAndProducer(music.getArtist(), music.getProducer())
+                .ifPresent(m -> {
+                    throw new InvalidEntityException(String.format("Music:'%s' and '%s' already exists.",
+                            m.getArtist(), m.getProducer()));
+                });
+        return this.musicRepository.saveAndFlush(music);
     }
 
     @Override
     public Music updateMusic(Music music) {
-        return null;
+        music.setDatePublished(LocalDateTime.now());
+        return this.musicRepository.saveAndFlush(music);
     }
 
     @Override
     public Music deleteMusic(Long id) {
-        return null;
+        Music music = getMusicById(id);
+        this.musicRepository.deleteById(id);
+        return music;
     }
 
     @Override
     public long getMusicCount() {
-        return 0;
+        return this.musicRepository.count();
     }
 }

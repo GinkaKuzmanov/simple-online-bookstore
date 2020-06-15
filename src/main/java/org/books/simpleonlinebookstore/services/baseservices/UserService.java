@@ -21,6 +21,6 @@ public interface UserService {
 
     long getUsersCount();
 
-    User getUserByUsername(String username);
+    UserDetails getUserByUsername(String username);
 }
 

@@ -6,7 +6,7 @@ import org.books.simpleonlinebookstore.services.commercial.Priceable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,14 +20,14 @@ public class Item extends BaseEntity implements Priceable {
     @NotEmpty
     protected String title;
 
-    protected final Date datePublished = new Date();
+    protected LocalDateTime datePublished = LocalDateTime.now();
 
     @NotEmpty
     @NonNull
     @Column(columnDefinition = "money", scale = 2)
     protected Double price;
 
-    @ManyToMany(fetch = FetchType.EAGER,targetEntity = User.class,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = User.class, cascade = CascadeType.ALL)
     @JoinTable(name = "items_users",
             joinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id")

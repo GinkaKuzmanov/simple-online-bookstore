@@ -1,6 +1,5 @@
 package org.books.simpleonlinebookstore.services.baseservices;
 
-import org.books.simpleonlinebookstore.models.base.Item;
 import org.books.simpleonlinebookstore.models.items.Book;
 
 import java.util.Collection;

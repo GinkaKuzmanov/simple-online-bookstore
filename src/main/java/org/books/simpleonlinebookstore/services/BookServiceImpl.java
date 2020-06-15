@@ -2,11 +2,14 @@ package org.books.simpleonlinebookstore.services;
 
 import org.books.simpleonlinebookstore.dao.BookRepository;
 import org.books.simpleonlinebookstore.exceptions.EntityNotFoundException;
+import org.books.simpleonlinebookstore.exceptions.InvalidEntityException;
 import org.books.simpleonlinebookstore.models.items.Book;
 import org.books.simpleonlinebookstore.services.baseservices.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -16,7 +19,7 @@ public class BookServiceImpl implements BookService {
 
 
     @Autowired
-    public BookServiceImpl( BookRepository bookRepository) {
+    public BookServiceImpl(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
 
@@ -33,23 +36,29 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book createBook(Book book) {
-        return null;
+    public Book createBook(@Valid Book book) {
+        this.bookRepository.findByIsbn(book.getIsbn()).ifPresent(b -> {
+            throw new InvalidEntityException(String.format("Book '%s' already exists.", book.getTitle()));
+        });
+        return this.bookRepository.saveAndFlush(book);
     }
 
     @Override
     public Book updateBook(Book book) {
-        return null;
+        book.setDatePublished(LocalDateTime.now());
+        return this.bookRepository.saveAndFlush(book);
     }
 
     @Override
     public Book deleteBook(Long id) {
-        return null;
+        Book book = getBookById(id);
+        this.bookRepository.deleteById(id);
+        return book;
     }
 
     @Override
     public long getBookCount() {
-        return 0;
+        return this.bookRepository.count();
     }
 
 

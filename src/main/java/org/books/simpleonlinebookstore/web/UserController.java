@@ -22,9 +22,9 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Collection<User>> getAllUsers(){
-       Collection<User> users = this.userService.getUsers();
-       return new ResponseEntity<>(users, HttpStatus.OK);
+    public ResponseEntity<Collection<User>> getAllUsers() {
+        Collection<User> users = this.userService.getUsers();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
 }
