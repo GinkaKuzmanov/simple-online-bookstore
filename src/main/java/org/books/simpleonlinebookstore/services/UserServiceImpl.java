@@ -1,17 +1,34 @@
 package org.books.simpleonlinebookstore.services;
 
+import org.books.simpleonlinebookstore.dao.UserRepository;
 import org.books.simpleonlinebookstore.models.User;
 import org.books.simpleonlinebookstore.services.baseservices.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
+    private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder encoder) {
+        this.userRepository = userRepository;
+        this.encoder = encoder;
+    }
+
     @Override
     public Collection<User> getUsers() {
-        return null;
+        return this.userRepository.findAll()
+                .stream().peek(user -> {
+                    String pass = user.getPassword();
+                    user.setPassword(this.encoder.encode(pass));
+                }).collect(Collectors.toList());
     }
 
     @Override
