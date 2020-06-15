@@ -1,7 +1,7 @@
 package org.books.simpleonlinebookstore.services;
 
 import org.books.simpleonlinebookstore.dao.BookRepository;
-import org.books.simpleonlinebookstore.models.base.Item;
+import org.books.simpleonlinebookstore.exceptions.EntityNotFoundException;
 import org.books.simpleonlinebookstore.models.items.Book;
 import org.books.simpleonlinebookstore.services.baseservices.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,22 +27,23 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Item getBookById(Long id) {
+    public Book getBookById(Long id) {
+        return this.bookRepository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException(String.format("Book with ID=%s not found.", id)));
+    }
+
+    @Override
+    public Book createBook(Book book) {
         return null;
     }
 
     @Override
-    public Item createBook(Item item) {
+    public Book updateBook(Book book) {
         return null;
     }
 
     @Override
-    public Item updateBook(Item item) {
-        return null;
-    }
-
-    @Override
-    public Item deleteBook(Long id) {
+    public Book deleteBook(Long id) {
         return null;
     }
 

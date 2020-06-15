@@ -9,13 +9,13 @@ public interface BookService {
 
     Collection<Book> getBooks();
 
-    Item getBookById(Long id);
+    Book getBookById(Long id);
 
-    Item createBook(Item item);
+    Book createBook(Book book);
 
-    Item updateBook(Item item);
+    Book updateBook(Book book);
 
-    Item deleteBook(Long id);
+    Book deleteBook(Long id);
 
     long getBookCount();
 }

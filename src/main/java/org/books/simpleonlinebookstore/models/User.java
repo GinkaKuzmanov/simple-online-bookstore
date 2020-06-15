@@ -2,6 +2,7 @@ package org.books.simpleonlinebookstore.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.books.simpleonlinebookstore.models.base.BaseEntity;
@@ -26,6 +27,8 @@ import java.util.Set;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties
+        ({"authorities", "accountNonExpired", "accountNonLocked", "credentialsNonExpired", "active", "enabled"})
 public class User extends BaseEntity implements UserDetails {
 
     @NonNull
