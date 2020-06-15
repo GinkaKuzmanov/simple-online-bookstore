@@ -35,7 +35,7 @@ public class ExceptionHandlerControllerAdvice {
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Something went wrong, please try again.");
     }
 
-    @ExceptionHandler({InvalidEntityException.class, ConstraintViolationException.class, HttpMessageConversionException.class})
+    @ExceptionHandler({ConstraintViolationException.class, HttpMessageConversionException.class})
     public ResponseEntity<ErrorResponse> handle(Exception ex) {
         log.error(ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(ex.getClass().getSimpleName(), ex.getMessage()));
