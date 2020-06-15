@@ -2,6 +2,7 @@ package org.books.simpleonlinebookstore.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.books.simpleonlinebookstore.exceptions.EntityNotFoundException;
+import org.books.simpleonlinebookstore.exceptions.InvalidEntityException;
 import org.books.simpleonlinebookstore.models.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,13 @@ public class ExceptionHandlerControllerAdvice {
     }
 
     @ExceptionHandler
-    public ResponseEntity<String> handle(MethodArgumentTypeMismatchException ex) {
+    public ResponseEntity<String> handle(InvalidEntityException ex) {
+        log.error(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Something went wrong, please try again later.");
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> handle(Exception ex) {
         log.error(ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Something went wrong, please try again later.");
     }
