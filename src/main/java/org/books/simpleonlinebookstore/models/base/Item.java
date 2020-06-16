@@ -37,7 +37,8 @@ public class Item extends BaseEntity implements Priceable {
 
     @Override
     public Double calculatePrice() {
-        return price;
+        //with Bulgarian Value-added tax
+        return price * 1.20;
     }
 
 }
