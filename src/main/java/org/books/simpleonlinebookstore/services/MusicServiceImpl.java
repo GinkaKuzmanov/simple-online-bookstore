@@ -47,7 +47,7 @@ public class MusicServiceImpl implements MusicService {
     }
 
     @Override
-    public Music updateMusic(Music music) {
+    public Music updateMusic(@Valid Music music) {
         music.setDatePublished(LocalDateTime.now());
         return this.musicRepository.saveAndFlush(music);
     }

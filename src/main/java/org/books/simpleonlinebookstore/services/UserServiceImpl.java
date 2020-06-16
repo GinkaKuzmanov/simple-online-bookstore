@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -50,7 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(User user) {
+    public User createUser(@Valid User user) {
         this.userRepository.findByEmail(user.getEmail()).ifPresent(u -> {
             throw new InvalidEntityException(String.format("User with email '%s' already exists.", user.getEmail()));
         });
@@ -68,7 +69,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User updateUser(User user) {
+    public User updateUser(@Valid User user) {
         user.setModified(LocalDateTime.now());
         return this.userRepository.saveAndFlush(user);
     }

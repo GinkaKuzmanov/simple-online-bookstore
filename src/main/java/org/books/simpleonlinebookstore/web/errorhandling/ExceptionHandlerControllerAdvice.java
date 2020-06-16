@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import javax.validation.ConstraintViolationException;
 import java.nio.file.AccessDeniedException;
@@ -22,6 +23,13 @@ public class ExceptionHandlerControllerAdvice {
         log.error(ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(ex.getClass().getSimpleName(), ex.getMessage()));
     }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handle(MethodArgumentTypeMismatchException ex) {
+        log.error(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(ex.getClass().getSimpleName(), ex.getMessage()));
+    }
+
 
     @ExceptionHandler
     public ResponseEntity<String> handle(AccessDeniedException ex) {

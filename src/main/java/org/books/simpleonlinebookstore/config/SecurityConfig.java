@@ -27,18 +27,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("rest").password(
-                this.passwordEncoder.encode("rocks")).roles("USER");
-    }
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.inMemoryAuthentication()
+//                .withUser("rest").password(
+//                this.passwordEncoder.encode("rocks")).roles("ADMIN");
+//    }
+//
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.authorizeRequests()
+//                .anyRequest().authenticated()
+//                .and().httpBasic();
+//    }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .anyRequest().authenticated()
-                .and().httpBasic();
+    protected void configure (HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .authorizeRequests()
+//                .antMatchers(HttpMethod.POST, "/**").hasAnyRole("USER", "ADMIN")
+//                .antMatchers(HttpMethod.PUT, "/**").hasAnyRole("USER", "ADMIN")
+//                .antMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")
+                .antMatchers("/**").permitAll();
+//                .and()
+//                .formLogin()
+//                .and()
+//                .httpBasic();
     }
 
     @Bean

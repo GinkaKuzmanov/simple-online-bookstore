@@ -8,6 +8,7 @@ import org.books.simpleonlinebookstore.models.base.BaseEntity;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.HashSet;
@@ -27,7 +28,7 @@ public class Role extends BaseEntity implements GrantedAuthority {
         this.authority = authority;
     }
 
-    @ManyToMany(mappedBy = "authorities")
+    @ManyToMany(mappedBy = "authorities",fetch = FetchType.EAGER)
     private Set<User> users = new HashSet<>();
 
 

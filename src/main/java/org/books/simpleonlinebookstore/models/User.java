@@ -54,7 +54,7 @@ public class User extends BaseEntity implements UserDetails {
     private String password;
 
     @Embedded
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Address address;
 
     @Embedded
@@ -62,7 +62,7 @@ public class User extends BaseEntity implements UserDetails {
             @AttributeOverride(name = "mobilePhone", column = @Column(name = "mobile_phone")),
             @AttributeOverride(name = "secondEmail", column = @Column(name = "second_email"))
     })
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Contact contact;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -78,12 +78,12 @@ public class User extends BaseEntity implements UserDetails {
 
     @ManyToMany(mappedBy = "buyers")
     @ToString.Exclude
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Book> books = new HashSet<>();
 
     @ManyToMany(mappedBy = "buyers")
     @ToString.Exclude
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Music> music = new HashSet<>();
 
 
