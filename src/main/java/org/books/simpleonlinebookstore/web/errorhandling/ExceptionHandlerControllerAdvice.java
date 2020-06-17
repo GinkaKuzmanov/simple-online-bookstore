@@ -18,26 +18,26 @@ import java.nio.file.AccessDeniedException;
 @Slf4j
 public class ExceptionHandlerControllerAdvice {
 
-    @ExceptionHandler
+    @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorResponse> handle(EntityNotFoundException ex) {
         log.error(ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(ex.getClass().getSimpleName(), ex.getMessage()));
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorResponse> handle(MethodArgumentTypeMismatchException ex) {
         log.error(ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(ex.getClass().getSimpleName(), ex.getMessage()));
     }
 
 
-    @ExceptionHandler
+    @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<String> handle(AccessDeniedException ex) {
         log.error(ex.getMessage());
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(InvalidEntityException.class)
     public ResponseEntity<String> handle(InvalidEntityException ex) {
         log.error(ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Something went wrong, please try again.");
