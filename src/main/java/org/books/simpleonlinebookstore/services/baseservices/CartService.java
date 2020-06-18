@@ -1,14 +1,15 @@
 package org.books.simpleonlinebookstore.services.baseservices;
 
-import org.books.simpleonlinebookstore.models.User;
-import org.books.simpleonlinebookstore.services.commercial.Priceable;
+import org.books.simpleonlinebookstore.models.BillResponse;
+import org.books.simpleonlinebookstore.models.items.Book;
+import org.books.simpleonlinebookstore.models.items.Music;
 
-public interface CartService extends Priceable {
+import java.util.List;
 
-    //catalog books
-    void buyBookForUser(User user);
+public interface CartService {
 
-    //catalog music
-    void buyMusicForUser(User user);
+    BillResponse buyBookForUser(String username, List<Book> book);
+
+    BillResponse buyMusicForUser(String username, List<Music> music);
 
 }
