@@ -35,6 +35,7 @@ public class CartServiceImpl implements CartService {
         User user = this.userService.getUserByEmail(username);
         List<Book> existingBooks = book.stream()
                 .map(b -> this.bookService.getBookById(b.getId()))
+                .peek(b -> b.getBuyers().add(user))
                 .collect(Collectors.toList());
         user.getBooks().addAll(existingBooks);
 
@@ -49,6 +50,7 @@ public class CartServiceImpl implements CartService {
         User user = this.userService.getUserByEmail(username);
         List<Music> existingMusic = music.stream()
                 .map(m -> this.musicService.getMusicById(m.getId()))
+                .peek(m -> m.getBuyers().add(user))
                 .collect(Collectors.toList());
 
         user.getMusic().addAll(existingMusic);
