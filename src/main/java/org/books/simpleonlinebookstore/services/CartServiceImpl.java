@@ -37,6 +37,7 @@ public class CartServiceImpl implements CartService {
                 .map(b -> this.bookService.getBookById(b.getId()))
                 .peek(b -> b.getBuyers().add(user))
                 .collect(Collectors.toList());
+
         user.getBooks().addAll(existingBooks);
 
         Double price = existingBooks.stream()

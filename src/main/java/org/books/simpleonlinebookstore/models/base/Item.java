@@ -33,6 +33,7 @@ public class Item extends BaseEntity implements Priceable {
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id")
     )
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     protected Set<User> buyers = new HashSet<>();
 
     @Override
