@@ -11,13 +11,15 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.validation.ConstraintViolationException;
 import java.nio.file.AccessDeniedException;
 
 @ControllerAdvice("org.books.simpleonlinebookstore.web")
 @Slf4j
-public class ExceptionHandlerControllerAdvice {
+public class ExceptionHandlerControllerAdvice{
+
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorResponse> handle(EntityNotFoundException ex) {
@@ -39,18 +41,16 @@ public class ExceptionHandlerControllerAdvice {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
     }
 
-    @ExceptionHandler(InvalidEntityException.class)
-    public ResponseEntity<String> handle(InvalidEntityException ex) {
-        log.error(ex.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Something went wrong, please try again.");
-    }
 
-    @ExceptionHandler({ConstraintViolationException.class, HttpMessageConversionException.class
-            , MethodArgumentTypeMismatchException.class})
+    @ExceptionHandler({InvalidEntityException.class,
+            ConstraintViolationException.class,
+            HttpMessageConversionException.class,
+            HttpMessageConversionException.class,
+            MethodArgumentTypeMismatchException.class
+    })
     public ResponseEntity<ErrorResponse> handle(Exception ex) {
         log.error(ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(ex.getClass().getSimpleName(), ex.getMessage()));
     }
-
 
 }

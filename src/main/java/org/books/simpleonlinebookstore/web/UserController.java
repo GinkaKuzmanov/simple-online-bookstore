@@ -7,6 +7,7 @@ import org.books.simpleonlinebookstore.services.baseservices.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
@@ -37,6 +38,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
+    @PreAuthorize("isAnonymous()")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         User created = this.userService.createUser(user);
         URI location = MvcUriComponentsBuilder.fromMethodName(UserController.class, "createUser", User.class)
