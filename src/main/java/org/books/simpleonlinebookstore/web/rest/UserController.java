@@ -1,4 +1,4 @@
-package org.books.simpleonlinebookstore.web;
+package org.books.simpleonlinebookstore.web.rest;
 
 import lombok.extern.slf4j.Slf4j;
 import org.books.simpleonlinebookstore.exceptions.InvalidEntityException;

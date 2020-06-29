@@ -1,4 +1,4 @@
-package org.books.simpleonlinebookstore.web;
+package org.books.simpleonlinebookstore.web.rest;
 
 import org.books.simpleonlinebookstore.models.BillResponse;
 import org.books.simpleonlinebookstore.models.items.Book;
