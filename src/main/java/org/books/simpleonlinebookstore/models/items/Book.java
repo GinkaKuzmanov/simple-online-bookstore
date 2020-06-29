@@ -9,7 +9,6 @@ import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "books")
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
