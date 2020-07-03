@@ -14,9 +14,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -73,16 +71,19 @@ public class User extends BaseEntity implements UserDetails {
     private boolean active = true;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @ToString.Exclude
     private Collection<Role> authorities = new HashSet<>();
 
-    @ManyToMany(mappedBy = "buyers")
+    @ManyToMany(mappedBy = "buyers", fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @ToString.Exclude
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Set<Book> books = new HashSet<>();
 
-    @ManyToMany(mappedBy = "buyers")
+    @ManyToMany(mappedBy = "buyers",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @ToString.Exclude
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Set<Music> music = new HashSet<>();
 
 

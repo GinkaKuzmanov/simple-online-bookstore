@@ -31,32 +31,37 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public BillResponse buyBookForUser(String username, List<Book> book) {
+    public BillResponse buyBookForUser(String username, List<Book> books) {
         User user = this.userService.getUserByEmail(username);
-        List<Book> existingBooks = book.stream()
-                .map(b -> this.bookService.getBookById(b.getId()))
-                .peek(b -> b.getBuyers().add(user))
-                .collect(Collectors.toList());
+        user.getBooks().addAll(books);
 
-        user.getBooks().addAll(existingBooks);
+        this.userService.updateUser(user);
 
-        Double price = existingBooks.stream()
+        for (Book book : books) {
+            book.getBuyers().add(user);
+            this.bookService.updateBook(book);
+        }
+
+        Double price = books.stream()
                 .mapToDouble(Item::calculatePrice)
                 .sum();
+
         return new BillResponse(user.getUsername(), price);
     }
 
     @Override
     public BillResponse buyMusicForUser(String username, List<Music> music) {
         User user = this.userService.getUserByEmail(username);
-        List<Music> existingMusic = music.stream()
-                .map(m -> this.musicService.getMusicById(m.getId()))
-                .peek(m -> m.getBuyers().add(user))
-                .collect(Collectors.toList());
+        user.getMusic().addAll(music);
 
-        user.getMusic().addAll(existingMusic);
+        this.userService.updateUser(user);
 
-        Double price = existingMusic.stream()
+        for (Music song : music) {
+            song.getBuyers().add(user);
+            this.musicService.updateMusic(song);
+        }
+
+        Double price = music.stream()
                 .mapToDouble(Item::calculatePrice)
                 .sum();
 

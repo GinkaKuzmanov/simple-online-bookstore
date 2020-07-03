@@ -1,5 +1,6 @@
 package org.books.simpleonlinebookstore.models.base;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.books.simpleonlinebookstore.models.User;
 import org.books.simpleonlinebookstore.services.commercial.Priceable;
@@ -14,7 +15,7 @@ import java.util.Set;
 @MappedSuperclass
 @NoArgsConstructor
 @Data
-public class Item extends BaseEntity implements Priceable {
+public abstract class Item extends BaseEntity implements Priceable {
 
     @NonNull
     @NotEmpty
@@ -22,18 +23,15 @@ public class Item extends BaseEntity implements Priceable {
 
     protected LocalDateTime datePublished = LocalDateTime.now();
 
-    @NotEmpty
     @NonNull
-    @Column(columnDefinition = "money", scale = 2)
+    @Column(nullable = false)
     protected Double price;
 
-    @ManyToMany(fetch = FetchType.EAGER, targetEntity = User.class, cascade = CascadeType.ALL)
-    @JoinTable(name = "items_users",
-            joinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id")
-    )
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = User.class, cascade
+            = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @JsonIgnore
     protected Set<User> buyers = new HashSet<>();
 
     @Override
