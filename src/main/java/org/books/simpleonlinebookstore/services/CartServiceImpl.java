@@ -12,8 +12,8 @@ import org.books.simpleonlinebookstore.services.baseservices.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -32,12 +32,16 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public BillResponse buyBookForUser(String username, List<Book> books) {
-        User user = this.userService.getUserByEmail(username);
-        user.getBooks().addAll(books);
+        List<Book> booksStillNotBought = new ArrayList<>(books);
 
+        User user = this.userService.getUserByEmail(username);
+
+        booksStillNotBought.removeIf(book -> user.getBooks().contains(book));
+
+        user.getBooks().addAll(booksStillNotBought);
         this.userService.updateUser(user);
 
-        for (Book book : books) {
+        for (Book book : booksStillNotBought) {
             book.getBuyers().add(user);
             this.bookService.updateBook(book);
         }
@@ -51,12 +55,16 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public BillResponse buyMusicForUser(String username, List<Music> music) {
+        List<Music> musicNotYetBought = new ArrayList<>(music);
+
         User user = this.userService.getUserByEmail(username);
-        user.getMusic().addAll(music);
+        musicNotYetBought.removeIf(m -> user.getMusic().contains(m));
+
+        user.getMusic().addAll(musicNotYetBought);
 
         this.userService.updateUser(user);
 
-        for (Music song : music) {
+        for (Music song : musicNotYetBought) {
             song.getBuyers().add(user);
             this.musicService.updateMusic(song);
         }

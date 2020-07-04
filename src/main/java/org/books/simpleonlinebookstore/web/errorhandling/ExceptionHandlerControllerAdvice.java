@@ -18,7 +18,7 @@ import java.nio.file.AccessDeniedException;
 
 @ControllerAdvice("org.books.simpleonlinebookstore.web")
 @Slf4j
-public class ExceptionHandlerControllerAdvice{
+public class ExceptionHandlerControllerAdvice {
 
 
     @ExceptionHandler(EntityNotFoundException.class)

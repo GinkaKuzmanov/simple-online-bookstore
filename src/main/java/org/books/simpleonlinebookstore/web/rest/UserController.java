@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.books.simpleonlinebookstore.exceptions.InvalidEntityException;
 import org.books.simpleonlinebookstore.models.User;
 import org.books.simpleonlinebookstore.models.items.Book;
+import org.books.simpleonlinebookstore.models.items.Music;
 import org.books.simpleonlinebookstore.services.baseservices.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -67,5 +68,12 @@ public class UserController {
         User user = this.userService.getUserById(userId);
         Collection<Book> userBooks = user.getBooks();
         return ResponseEntity.ok(userBooks);
+    }
+
+    @GetMapping("/{userId}/music")
+    public ResponseEntity<Collection<Music>> getUserMusic(@PathVariable Long userId) {
+        User user = this.userService.getUserById(userId);
+        Collection<Music> userMusic = user.getMusic();
+        return ResponseEntity.ok(userMusic);
     }
 }

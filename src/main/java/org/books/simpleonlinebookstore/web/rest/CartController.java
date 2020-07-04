@@ -1,11 +1,9 @@
 package org.books.simpleonlinebookstore.web.rest;
 
 import org.books.simpleonlinebookstore.models.BillResponse;
-import org.books.simpleonlinebookstore.models.User;
 import org.books.simpleonlinebookstore.models.items.Book;
 import org.books.simpleonlinebookstore.models.items.Music;
 import org.books.simpleonlinebookstore.services.baseservices.CartService;
-import org.books.simpleonlinebookstore.services.baseservices.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +29,6 @@ public class CartController {
         this.cartService = cartService;
     }
 
-
     @PostMapping("/books")
     public ResponseEntity<BillResponse> buyBooks(@AuthenticationPrincipal UserDetails userDetails, @RequestBody List<Book> book) {
         String username = userDetails.getUsername();
@@ -46,7 +43,6 @@ public class CartController {
         BillResponse billResponse = this.cartService.buyMusicForUser(username, music);
         return new ResponseEntity<>(billResponse, HttpStatus.OK);
     }
-
 
 }
 
