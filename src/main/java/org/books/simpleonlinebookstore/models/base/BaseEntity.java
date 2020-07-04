@@ -1,5 +1,6 @@
 package org.books.simpleonlinebookstore.models.base;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,5 +20,6 @@ public abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long id;
 }
