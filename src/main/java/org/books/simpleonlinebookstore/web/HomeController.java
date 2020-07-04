@@ -38,11 +38,12 @@ public class HomeController {
                 .getUserByEmail(credentials.getUsername());
         final String token = jwtUtils.generateToken(user);
         log.info("Login successful for {}: {}", user.getUsername(), token);
+
         return ResponseEntity.ok(new JwtResponse(token, user));
     }
 
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping("/")
     public RedirectView home() {
         return new RedirectView("/api/login/");
     }
