@@ -50,11 +50,13 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority(ROLE_ADMIN)")
     public User deleteUser(@PathVariable Long id) {
         return this.userService.deleteUser(id);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority(ROLE_USER)")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
         if (!user.getId().equals(id)) throw new InvalidEntityException(
                 String.format("User ID=%s from path is different from Entity ID=%s", id, user.getId()));

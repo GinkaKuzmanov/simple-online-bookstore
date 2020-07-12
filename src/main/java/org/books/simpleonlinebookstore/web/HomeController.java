@@ -9,6 +9,7 @@ import org.books.simpleonlinebookstore.services.baseservices.UserService;
 import org.books.simpleonlinebookstore.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,8 @@ public class HomeController {
     }
 
 
-    @GetMapping("/api/login/")
+    @PostMapping("/api/login/")
+    @PreAuthorize("isAnonymous()")
     public ResponseEntity<JwtResponse> login(@RequestBody Credentials credentials) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword()));
