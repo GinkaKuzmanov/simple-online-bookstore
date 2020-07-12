@@ -39,6 +39,7 @@ public class MusicController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("isAuthenticated() and hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Music> addMusic(@RequestBody Music music) {
         Music added = this.musicService.createMusic(music);
         URI location = MvcUriComponentsBuilder.fromMethodName(MusicController.class, "addMusic", Music.class)
@@ -48,7 +49,7 @@ public class MusicController {
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("isAuthenticated() and hasAuthority('ROLE_ADMIN')")
     public Music deleteMusic(@PathVariable final Long id) {
         return this.musicService.deleteMusic(id);
     }

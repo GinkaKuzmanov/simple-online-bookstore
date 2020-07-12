@@ -40,6 +40,7 @@ public class BookController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("isAuthenticated() and hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Book> addBook(@RequestBody Book book) {
         Book added = this.bookService.createBook(book);
         URI location = MvcUriComponentsBuilder.fromMethodName(BookController.class, "addBook", Book.class)
@@ -49,7 +50,7 @@ public class BookController {
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("isAuthenticated() and hasAuthority('ROLE_ADMIN')")
     public Book deleteBook(@PathVariable final Long id) {
         return this.bookService.deleteBook(id);
     }
