@@ -7,6 +7,7 @@ import org.books.simpleonlinebookstore.services.baseservices.MusicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
@@ -47,6 +48,7 @@ public class MusicController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public Music deleteMusic(@PathVariable final Long id) {
         return this.musicService.deleteMusic(id);
     }
