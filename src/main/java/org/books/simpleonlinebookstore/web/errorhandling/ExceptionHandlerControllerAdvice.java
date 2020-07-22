@@ -43,7 +43,7 @@ public class ExceptionHandlerControllerAdvice {
 
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handle(Exception ex) {
+    public ResponseEntity<ErrorResponse> handle(Exception ex) {
         log.error(ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(ex.getClass().getSimpleName(), ex.getMessage()));
     }
