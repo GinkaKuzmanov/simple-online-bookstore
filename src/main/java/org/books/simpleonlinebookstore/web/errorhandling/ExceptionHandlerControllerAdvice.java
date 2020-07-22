@@ -42,11 +42,7 @@ public class ExceptionHandlerControllerAdvice {
     }
 
 
-    @ExceptionHandler({InvalidEntityException.class,
-            ConstraintViolationException.class,
-            HttpMessageConversionException.class,
-            MethodArgumentTypeMismatchException.class
-    })
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handle(Exception ex) {
         log.error(ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(ex.getClass().getSimpleName(), ex.getMessage()));
